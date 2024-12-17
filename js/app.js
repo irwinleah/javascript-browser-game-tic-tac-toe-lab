@@ -15,8 +15,8 @@
 
 
 /*-------------------------------- Constants --------------------------------*/
-const messageEl = document.querySelector('#message')
-    console.log(messageEl)
+const messageEl = document.querySelector('#message');
+    console.log(messageEl);
 const winningCombos = [
     [0, 1, 2],
     [3, 4, 5],
@@ -26,7 +26,7 @@ const winningCombos = [
     [0, 3, 6],
     [1, 4, 7],
     [2, 5, 8]
-]
+];
 /*---------------------------- Variables (state) ----------------------------*/
 let board; 
 let turn; // = whose turn it is;
@@ -35,10 +35,11 @@ let tie; // = represent if the game has ended in a tie;
 
 
 /*------------------------ Cached Element References ------------------------*/
-const squareEls = document.querySelectorAll('.sqr')
-    console.log(squareEls)
-const messageElement = document.getElementById('message')
-init()
+const squareEls = document.querySelectorAll('.sqr');
+    console.log(squareEls);
+const messageElement = document.getElementById('message');
+init();
+const resetBtnEl = document.getElementById('reset');
 /*-------------------------------- Functions --------------------------------*/
 function init(){ //initial values
     board = [
@@ -49,8 +50,8 @@ function init(){ //initial values
 
     turn = 'X';
     winner = false;
-    tie = false
-    render()
+    tie = false;
+    render();
     // console.log(render())
 }
 function render(){
@@ -76,13 +77,13 @@ function updateBoard(){
     }
 }
 function updateMessage(){
-
+    const messageElement = document.getElementById('gameMessage'); // Assuming there's an element to display the message
     if(!winner && !tie) {
         messageElement.textContent = `${turn}'s turn!`;
     } else if (!winner && tie) {
         messageElement.textContent = "It's a tie!";
     } else {
-        messageElement.textContent = `${turn} wins! Congratulation!`
+        messageElement.textContent = `${turn} wins! Congratulation!`;
     }
 }
 
@@ -94,43 +95,45 @@ function handleClick(event) {
     if (winner === true){
         return //board is no longer applicable
     }
-    placePiece(squareIndex)
-    checkForWinner()
-    checkForTie()
-    switchPlayerTurn()
-    render()
-    console.log(squareIndex)
+    placePiece(squareIndex);
+    checkForWinner();
+    checkForTie();
+    switchPlayerTurn();
+    render();
+    console.log(squareIndex);
 }
 
 function placePiece(index) {
     board[index] = turn
-    console.log(board)
+    console.log(board);
 }
 
 function checkForWinner(){
     winningCombos.forEach(combo => {
        if (board[combo[0]] !== '' && board[combo[0]] === board[combo[1]] && board[combo[0]] === board[combo[2]]) {
-        winner = true }
-        console.log(winner)
+        winner = true };
+        console.log(winner);
     }) 
 }
 function checkForTie(){
-    if (winner === true) return
-    if (board.includes('')) return
-    tie = true
+    if (winner === true) return;
+    if (board.includes('')) return;
+    tie = true;
 }
 function switchPlayerTurn(){
-    if (winner === true) return
+    if (winner === true) return;
     if (winner === false) {
         if (turn === 'X'){
-            turn = 'O'
+            turn = 'O';
         } else {
-            turn = 'X'
+            turn = 'X';
         }
     }
 }
 /*----------------------------- Event Listeners -----------------------------*/
 squareEls.forEach(square => {
-    square.addEventListener('click', handleClick)
+    square.addEventListener('click', handleClick);
 
 })
+resetBtnEl.addEventListener('click', init);
+init(); 
